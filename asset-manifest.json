@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/bs-table-test/static/css/main.bcaa76cf.css",
+    "main.js": "/bs-table-test/static/js/main.cbbc0906.js",
+    "static/js/453.62ff8e3e.chunk.js": "/bs-table-test/static/js/453.62ff8e3e.chunk.js",
+    "index.html": "/bs-table-test/index.html",
+    "main.bcaa76cf.css.map": "/bs-table-test/static/css/main.bcaa76cf.css.map",
+    "main.cbbc0906.js.map": "/bs-table-test/static/js/main.cbbc0906.js.map",
+    "453.62ff8e3e.chunk.js.map": "/bs-table-test/static/js/453.62ff8e3e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bcaa76cf.css",
+    "static/js/main.cbbc0906.js"
+  ]
+}
