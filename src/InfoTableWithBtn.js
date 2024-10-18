@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
 function InfoTableWithBtn({ data }) {
-    const { id, title,tableData, workInfo } = data;
+    const { id, title, tableData, workInfo } = data;
     const collapseId = useRef(`collapseEle${id}`);
     // let tableData = [
     //     {
@@ -37,7 +37,7 @@ function InfoTableWithBtn({ data }) {
                 {title}
             </button>
             <div className="collapse" id={collapseId.current}>
-                <table className="table align-middle text-center">
+                <table className="table align-middle text-center table-primary">
                     {
                         tableData.map((item) => {
                             return item.type === "thead" ? <TableHead rows={item.rows} /> : <TableBody rows={item.rows} />
@@ -102,7 +102,7 @@ function TableHead({ rows }) {
                     return (
                         <tr>
                             {row.map((item, index) => {
-                                return <th key={index}>{item}</th>
+                                return <th key={index}><WrapParaWhenChinese text={item} /></th>
                             })}
                         </tr>
                     )
@@ -117,28 +117,65 @@ function TableBody({ rows }) {
         <tbody>
             {
                 rows.map((row) => {
+                    // return <Row row={row} />
                     return (
                         <tr>
                             {row.map((item, index) => {
-                                return typeof item === "string" ? <td key={index}>{item}</td> : <td rowSpan={item.rowSpan}>{item.content}</td>
+                                return typeof item === "string" ? <td key={index}><WrapParaWhenChinese text={item} /></td> : <td key={index} rowSpan={item.rowSpan}><WrapParaWhenChinese text={item.content} /></td>
                             })}
                         </tr>
                     )
                 })
             }
-            {/* <tr>
-                <td rowSpan={2}>113年</td>
-                <td>高考三級</td>
-                <td>3,326</td>
-                <td>2,291</td>
-            </tr>
-            <tr>
-                <td>普通考試</td>
-                <td>2,884</td>
-                <td>2,192</td>
-            </tr> */}
         </tbody>
     )
+    // 若tr需要用到表頭(th)可以使用
+    // function Row({ row }) {
+    //     let result = row.map((item, index) => {
+    //         // 第一項作為表頭(th)
+    //         if (index < 1) {
+    //             return typeof item === "string" ? <th key={index}><WrapParaWhenChinese text={item} /></th> : <th key={index} rowSpan={item.rowSpan}><WrapParaWhenChinese text={item.content} /></th>
+    //         } else {
+    //             return typeof item === "string" ? <td key={index}><WrapParaWhenChinese text={item} /></td> : <td key={index} rowSpan={item.rowSpan}><WrapParaWhenChinese text={item.content} /></td>
+    //         }
+    //     });
+    //     return (
+    //         <tr>
+    //             {result}
+    //         </tr>
+    //     )
+    // }
+}
+
+function WrapParaWhenChinese({ text }) {
+    // 如果是三個字以上的全中文字串就換行
+    if (typeof text !== "string") {
+        // 非字串就early return
+        return "傳入非字串"
+    }
+
+    let isChinese = true;
+    for (let i = 0; i < text.length; i++) {
+        if (text.charCodeAt(i) < 0x4E00 || text.charCodeAt(i) > 0x9FA5) {
+            isChinese = false;
+        }
+    }
+    if (isChinese === false) {
+        // 不是中文就early return
+        return text;
+    }
+
+    if (text.length >= 3) {
+        return (
+            <>
+                {text.substring(0, Math.round(text.length / 2))}
+                <br />
+                {text.substring(Math.round(text.length / 2), text.length)}
+            </>
+        )
+    } else {
+        return text;
+    }
 }
 
 export default InfoTableWithBtn;

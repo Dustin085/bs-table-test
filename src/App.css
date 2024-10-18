@@ -1,0 +1,11 @@
+/* bootStrap table */
+.table>:not(caption)>*>* {
+    padding: .5rem .1rem;
+    line-height: 1.2;
+}
+
+.table{
+    border: solid 1px var(--bs-primary);
+    border-radius: 5px;
+    overflow: hidden;
+}
